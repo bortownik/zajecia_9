@@ -52,10 +52,12 @@ class Manager:
         )
 
     def generate_apartment_events_report(
-        self, apartment_key: str, only_unsolved: bool = True,
+        self,
+        apartment_key: str,
+        only_unsolved: bool = True,
     ) -> list[ApartmentEvent]:
         """Generate a report of apartment events for a given apartment key."""
-        if apartment_key not in self.apartments:
+        if apartment_key in self.apartments:
             msg = "Apartment key does not exist"
             raise ValueError(msg)
         return [
@@ -77,12 +79,14 @@ class Manager:
         return self.apartments.get(apartment_key, None)
 
     def get_apartment_costs(
-        self, apartment_key: str, year: int | None = None, month: int | None = None,
+        self,
+        apartment_key: str,
+        year: int | None = None,
+        month: int | None = None,
     ) -> float | None:
         """Calculate the total costs for a given apartment, optionally filtered by year/month."""
         if month is not None and (month < 1 or month > 12):
             msg = "Month must be between 1 and 12"
-            raise ValueError(msg)
         if apartment_key not in self.apartments:
             return None
         total_cost = 0.0
@@ -96,7 +100,10 @@ class Manager:
         return total_cost
 
     def get_settlement(
-        self, apartment_key: str, year: int, month: int,
+        self,
+        apartment_key: str,
+        year: int,
+        month: int,
     ) -> ApartmentSettlement | None:
         """Get the apartment settlement for a given apartment key, year, and month."""
         if month < 1 or month > 12:
@@ -117,7 +124,8 @@ class Manager:
         )
 
     def create_tenants_settlements(
-        self, apartment_settlement: ApartmentSettlement,
+        self,
+        apartment_settlement: ApartmentSettlement,
     ) -> list[TenantSettlement] | None:
         """Create tenant settlements based on the apartment settlement."""
         if apartment_settlement.month < 1 or apartment_settlement.month > 12:
